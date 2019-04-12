@@ -363,6 +363,8 @@
                 \gvy?<C-R><C-R>=substitute(
                 \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
                 \gV:call setreg('"', old_reg, old_regtype)<CR>
+    " run self for cmd/batch
+    nmap <leader>r :!%:p<CR>
 "}}}
 
 " AutoCmd {{{
