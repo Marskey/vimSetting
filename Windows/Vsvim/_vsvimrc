@@ -1,0 +1,42 @@
+imap <c-l> <DEL>
+imap <c-CR> <ESC>O
+imap <c-f> <RIGHT>
+imap <c-b> <LEFT>
+nmap <c-CR> ^
+map  <c-w> :q<CR>
+
+let mapleader=","
+
+"vnoremap <Leader>y "+y
+vnoremap <leader>y "+y
+nmap <leader>p "+p
+
+inoremap <C-U> <C-G>u<C-U>
+
+nmap <C-O> :vsc View.NavigateBackward<CR>
+nmap <C-I> :vsc View.NavigateForward<CR>
+nmap <leader>cc :vsc Edit.CommentSelection<CR>
+nmap <leader>cu :vsc Edit.UncommentSelection<CR>
+
+"nmap <C-]> :vsc Edit.GoToDefinition<CR>
+
+nmap <leader>j :vsc IncrediBuild.NextError<cr>
+nmap <leader>k :vsc IncrediBuild.PreviousError<cr>
+
+map Q gq
+nmap <space> za
+
+set hlsearch
+set incsearch
+set noimdisable "离开insert模式的时候自动切换至英文输入法
+
+vnoremap <silent> * :<C-U>
+			\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
+			\gvy/<C-R><C-R>=substitute(
+			\escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+			\gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+			\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
+			\gvy?<C-R><C-R>=substitute(
+			\escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+			\gV:call setreg('"', old_reg, old_regtype)<CR>
