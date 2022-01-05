@@ -51,7 +51,7 @@
     "Plugin 'jnurmine/Zenburn'
     "Plugin 'vim-scripts/strange'
     "Plugin 'vyshane/vydark-vim-color'
-    "Plugin 'altercation/vim-colors-solarized'
+    Plugin 'altercation/vim-colors-solarized'
     "Plugin 'godlygeek/tabular'
     "Plugin 'vim-scripts/greenvision'
     call vundle#end()            " required
@@ -82,17 +82,17 @@
     set history=1000                                " Store a ton of history (default is 20)
     "set spell                                       " Spell checking on
     set hidden                                      " Allow buffer switching without saving
-    set autoread
+    "set autoread
     set noeol
     set noimdisable "离开insert模式的时候自动切换至英文输入法
     "set autowrite
     set encoding=utf-8
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-    if IsWINDOWS()
-        set fileencoding=cp936
-    else
-        set fileencoding=utf-8
-    endif
+    "if IsWINDOWS()
+        "set fileencoding=cp936
+    "else
+        "set fileencoding=utf-8
+    "endif
     "解决菜单乱码
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
@@ -101,6 +101,10 @@
 
     if IsWINDOWS()
         set wildignore+=*\\.git\\*,*\\.hg\\*,*\\.svn\\*,*.o,*.obj,*.pdb  " Windows ('noshellslash')
+        set backupdir=$TEMP,$TMP,.
+        set directory=$TEMP,$TMP,.
+        set undodir=$TEMP,$TMP,.
+
     endif
 
     highlight SpecialKey term=standout ctermbg=yellow guibg=yellow
@@ -109,7 +113,8 @@
 
 " Vim UI {{{
     "colors atom-dark
-    colors happy_hacking
+    "colors happy_hacking
+    colors solarized
     set background=dark
     set ambiwidth=double
 
@@ -123,11 +128,12 @@
     "highlight clear SignColumn
 
     "winpos 741 0
-    set lines =60 columns =110
+    set lines =60 columns =100
 
     if has('cmdline_info')
         set ruler                   " Show the ruler
-        set rulerformat=%40(%=%y\ %{&fenc?&fenc:&enc}\ \[%{&fileformat}\]%{&bomb?'[BOM]':''}\ %l,%c%V\ %P%) " A ruler on steroids
+        "set rulerformat=%40(%=%y\ %{&fenc?&fenc:&enc}\ \[%{&fileformat}\]%{&bomb?'[BOM]':''}\ %l,%c%V\ %P%) " A ruler on steroids
+        set rulerformat=%40(%=%y\ %{&fenc}\ \[%{&fileformat}\]%{&bomb?'[BOM]':''}\ %l,%c%V\ %P%) " A ruler on steroids
         set showcmd                 " Show partial commands in status line and
                                     " Selected characters/lines in visual mode
         set cmdheight=1
@@ -150,7 +156,7 @@
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
     set winminheight=0              " Windows can be 0 line high
-    "set ignorecase                  " Case insensitive search
+    set ignorecase                  " Case insensitive search
     set smartcase                   " Case sensitive when uc present
     set wildmenu                    " Show list instead of just completing
     "set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
@@ -276,7 +282,7 @@
             set transparency=3
             set guifont=Source\ Code\ Pro\ for\ Powerline:h12
         elseif IsWINDOWS()
-            set guifont=新宋体:h10:cGB2312
+            set guifont=新宋体:h12:cGB2312
         endif
 
     endif
@@ -323,10 +329,14 @@
 "}}}
 
 " Key Mappings {{{
-    let mapleader=","
+    let mapleader="<Space>" " default is '\'
+    nnoremap <SPACE> <Nop>
+    vnoremap <SPACE> <Nop>
     vnoremap <leader>y "+y
+    noremap <leader>y "+y
     nmap <leader>p "+p
     "inoremap <C-U> <C-G>u<C-U>
+    "imap jj <Esc>
     imap <c-l> <DEL>
     imap <c-CR> <ESC>O
     imap <c-f> <RIGHT>
@@ -340,7 +350,7 @@
     " Create a folder depend on {}, ()
     nmap <leader>f zf%
     " Toggle folder
-    nmap <space> za
+    "nmap <space> za
 
     map <silent><Up> :YcmCompleter GoTo<cr>
     map <Down> :bd<cr>
@@ -378,3 +388,9 @@
       "autocmd VimEnter * wincmd w
     "endif
 "}}}
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+au VimEnter * if line('$') > &lines | set go+=r | else | set go-=r | endif
+au VimResized * if line('$') > &lines | set go+=r | else | set go-=r | endif
