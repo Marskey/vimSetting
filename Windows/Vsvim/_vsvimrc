@@ -1,42 +1,52 @@
-imap <c-l> <DEL>
+inoremap <c-l> <DEL>
 imap <c-CR> <ESC>O
 imap <c-f> <RIGHT>
 imap <c-b> <LEFT>
 nmap <c-CR> ^
-map  <c-w> :q<CR>
 
-let mapleader=","
+let mapleader=" "
+nnoremap <SPACE> <Nop>
+vnoremap <SPACE> <Nop>
 
-"vnoremap <Leader>y "+y
-vnoremap <leader>y "+y
+vnoremap <Leader>y "+y
+vnoremap <Leader>p "+p
+nmap <leader>y "+y
 nmap <leader>p "+p
 
-inoremap <C-U> <C-G>u<C-U>
+"inoremap <C-U> <C-G>u<C-U>
 
 nmap <C-O> :vsc View.NavigateBackward<CR>
 nmap <C-I> :vsc View.NavigateForward<CR>
 nmap <leader>cc :vsc Edit.CommentSelection<CR>
 nmap <leader>cu :vsc Edit.UncommentSelection<CR>
+vmap <leader>cc :vsc Edit.CommentSelection<CR>
+vmap <leader>cu :vsc Edit.UncommentSelection<CR>
+nnoremap <Space><Space>s :vsc Tools.InvokePeasyMotionTwoCharJump<CR>
+nnoremap <Space><Space>g :vsc Tools.InvokePeasyMotion<CR>
 
 "nmap <C-]> :vsc Edit.GoToDefinition<CR>
 
 nmap <leader>j :vsc IncrediBuild.NextError<cr>
 nmap <leader>k :vsc IncrediBuild.PreviousError<cr>
+"nmap <silent> <leader><leader> :vsc EasyMotion.Navigate<CR>:
+nmap gd :vsc ReSharper.ReSharper_GotoDeclaration<CR>
 
 map Q gq
-nmap <space> za
 
 set hlsearch
 set incsearch
-set noimdisable "离开insert模式的时候自动切换至英文输入法
+set nojoinspaces  " Prevents inserting two spaces after punctuation on a join (J)
+set number
+set relativenumber
+"set noimdisable "离开insert模式的时候自动切换至英文输入法
 
-vnoremap <silent> * :<C-U>
-			\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
-			\gvy/<C-R><C-R>=substitute(
-			\escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-			\gV:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-			\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
-			\gvy?<C-R><C-R>=substitute(
-			\escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-			\gV:call setreg('"', old_reg, old_regtype)<CR>
+"vnoremap <silent> * :<C-U>
+			"\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
+			"\gvy/<C-R><C-R>=substitute(
+			"\escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+			"\gV:call setreg('"', old_reg, old_regtype)<CR>
+"vnoremap <silent> # :<C-U>
+			"\let old_reg=getreg('0')<Bar>let old_regtype=getregtype('0')<CR>
+			"\gvy?<C-R><C-R>=substitute(
+			"\escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+			"\gV:call setreg('"', old_reg, old_regtype)<CR>
